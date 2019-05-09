@@ -5,10 +5,14 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import createBrowserHistory from 'history/createBrowserHistory';
+import { MuiThemeProvider } from '@material-ui/core';
+import { ebbTheme } from './theme';
 
 ReactDOM.render(
   <Router history={createBrowserHistory()}>
-    <App />
+    <MuiThemeProvider theme={ebbTheme}>
+      <App />
+    </MuiThemeProvider>
   </Router>,
   document.getElementById('root'),
 );
