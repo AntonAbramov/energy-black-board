@@ -4,12 +4,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory as createHistory } from 'history'
 import { MuiThemeProvider } from '@material-ui/core';
 import { ebbTheme } from './theme';
 
 ReactDOM.render(
-  <Router history={createBrowserHistory()}>
+  <Router history={createHistory()}>
     <MuiThemeProvider theme={ebbTheme}>
       <App />
     </MuiThemeProvider>
