@@ -27,7 +27,7 @@ class DashboardPage extends Component {
     return (
       <Fragment>
         <Title className={classes.title}>Energy statistics</Title>
-        {/*<Spinner loading={true} size={40} />*/}
+        {/*<Spinner loading={true} size={40} /> */}
         <section className={classes.container}>{this.renderCard()}</section>
         <Chart history={this.props.history} />
       </Fragment>
