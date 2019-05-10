@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import cns from 'classnames';
 import { withStyles } from '@material-ui/core';
 
 class Card extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, selected, onClick } = this.props;
     return (
-      <div className={classes.card}>
+      <div onClick={onClick} className={cns(classes.card, { [classes.cardActive]: selected })}>
         <div className={classes.day}>today</div>
         <div className={classes.date}>
           14:55 <small>9 may 2019</small>
@@ -21,14 +22,18 @@ class Card extends Component {
             <span className={classes.value}>903</span> <small>kW/h</small>
           </div>
         </section>
-        <footer className={classes.footer} >
+        <footer className={classes.footer}>
           <div className={classes.footerItem}>
             earned
-            <div className={classes.amount}>257 <small>€</small></div>
+            <div className={classes.amount}>
+              257 <small>€</small>
+            </div>
           </div>
           <div className={classes.footerItem}>
             spend
-            <div className={classes.amount}>4334 <small>€</small></div>
+            <div className={classes.amount}>
+              4334 <small>€</small>
+            </div>
           </div>
         </footer>
       </div>
@@ -45,6 +50,18 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     display: 'flex',
     flexDirection: 'column',
+    cursor: "pointer",
+  },
+  cardActive: {
+    borderColor: "#357CA2",
+    cursor: "default",
+    "& $day": {
+
+    },
+    "& footer": {
+      background: "#357CA2",
+      color: "#fff"
+    }
   },
   day: {
     fontSize: '20px',
@@ -53,16 +70,16 @@ const styles = theme => ({
     marginBottom: 5,
   },
   date: {
-    fontSize: '20px',
+    fontSize: '16px',
   },
 
   bottom: {
     display: 'flex',
     marginTop: 50,
-    marginBottom: 16
+    marginBottom: 16,
   },
   bottomTitle: {
-    fontSize: '15px',
+    fontSize: '14px',
     color: '#828282',
     marginBottom: 5,
   },
@@ -76,18 +93,19 @@ const styles = theme => ({
     fontSize: '18px',
   },
   footer: {
-    background: "#F4F4F4",
-    margin: "0 -16px -16px -16px",
-    padding: "16px",
-    display: "flex",
+    background: '#F4F4F4',
+    borderTop: '1px solid #E6E8EB',
+    margin: '0 -16px -16px -16px',
+    padding: '16px',
+    display: 'flex',
   },
   footerItem: {
     flexGrow: 1,
   },
 
   amount: {
-    fontSize: '26px'
-  }
+    fontSize: '26px',
+  },
 });
 
 export default withStyles(styles)(Card);
