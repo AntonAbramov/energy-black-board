@@ -24,7 +24,6 @@ const todoAssignedByMeColor = lighten(0.2, '#14555A');
 const outlookEventColor = lighten(0.2, '#e6884f');
 
 export const themeObject = {
-
   primary: primaryColor,
 
   radius: 2,
