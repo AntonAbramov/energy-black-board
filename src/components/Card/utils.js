@@ -16,8 +16,8 @@ function parseData(data) {
     consumed: consumed.toFixed(3),
     date: '',
     day: '',
-    spent,
-    earned,
+    spent: (consumed * 0.2).toFixed(2),
+    earned: (generated * 0.2).toFixed(2),
     currency: "€"
   }
 }
