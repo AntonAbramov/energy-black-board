@@ -2,18 +2,24 @@ import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core';
 import Spinner from '../common/spinner/spinner';
 import Title from '../common/typography/Title';
-import Card from '../components/Card';
+import Card from '../components/Card/Card';
 import Chart from '../components/Chart';
+import { fetchData } from '../common/utils';
 
 class DashboardPage extends Component {
   state = {
     active: 1,
+    cards: [],
   };
+
+  componentDidMount() {
+    fetchData('/data.json').then(res => this.setState({ cards: res }));
+  }
 
   renderCard = () => {
     const res = [];
     for (let i = 0; i < 3; i++) {
-      res.push(<Card key={i} selected={this.state.active === i} onClick={this.cardClickHandler(i)} />);
+      res.push(<Card key={i} selected={this.state.active === i} data={this.state.cards} onClick={this.cardClickHandler(i)} />);
     }
     return res;
   };
