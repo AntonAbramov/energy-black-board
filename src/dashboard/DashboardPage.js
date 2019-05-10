@@ -8,24 +8,60 @@ import { fetchData } from '../common/utils';
 
 class DashboardPage extends Component {
   state = {
-    active: 1,
+    active: '',
     cards: [],
+    cardYear: [],
   };
 
   componentDidMount() {
-    fetchData('/data.json').then(res => this.setState({ cards: res }));
+    setTimeout(() => {
+      fetchData('/day.json')
+        .then(res => {
+          this.setState(state => {
+            state.cards.push({
+              period: 'day',
+              data: res,
+            });
+            return state;
+          });
+        })
+        .then(() => {
+          fetchData('/month.json').then(res => {
+            this.setState(state => {
+              state.cards.push({
+                period: 'month',
+                data: res,
+              });
+              return state;
+            });
+          });
+          fetchData('/year.json').then(res => {
+            this.setState(state => {
+              state.cards.push({
+                period: 'year',
+                data: res,
+              });
+              return state;
+            });
+          });
+        });
+    }, 300);
   }
 
   renderCard = () => {
-    const res = [];
-    for (let i = 0; i < 3; i++) {
-      res.push(<Card key={i} selected={this.state.active === i} data={this.state.cards} onClick={this.cardClickHandler(i)} />);
-    }
-    return res;
+    return this.state.cards.map((item, idx) => (
+      <Card
+        key={idx}
+        period={item.period}
+        selected={this.state.active === item.period}
+        data={item.data}
+        onClick={this.cardClickHandler(item.period)}
+      />
+    ));
   };
 
-  cardClickHandler = index => () => {
-    this.setState({ active: index });
+  cardClickHandler = val => () => {
+    this.setState({ active: val });
   };
 
   render() {
@@ -33,8 +69,7 @@ class DashboardPage extends Component {
     return (
       <Fragment>
         <Title className={classes.title}>Energy statistics</Title>
-        {/*<Spinner loading={true} size={40} />*/}
-        <section className={classes.container}>{this.renderCard()}</section>
+        <section className={classes.container}>{this.state.cards.length ? this.renderCard() : <Spinner loading={true} size={40} /> }</section>
         <Chart history={this.props.history} />
       </Fragment>
     );
@@ -46,7 +81,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'stretch',
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     justifyContent: 'space-around',
     marginLeft: -theme.spacing.unit,
     marginRight: -theme.spacing.unit,

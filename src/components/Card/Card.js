@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import cns from 'classnames';
 import { withStyles } from '@material-ui/core';
+import { parseData } from './utils';
 
 class Card extends Component {
   render() {
-    const { classes, selected, onClick } = this.props;
+    const { classes, selected, onClick, data, period } = this.props;
+    const formatedData = parseData(data);
     return (
       <div onClick={onClick} className={cns(classes.card, { [classes.cardActive]: selected })}>
         <div className={classes.day}>today</div>
@@ -15,24 +17,24 @@ class Card extends Component {
         <section className={classes.bottom}>
           <div className={classes.produced}>
             <div className={classes.bottomTitle}>produced</div>
-            <span className={classes.value}>123</span> <small>kW/h</small>
+            <span className={classes.value}>{formatedData.generated}</span> <small>kW/h</small>
           </div>
           <div className={classes.used}>
             <div className={classes.bottomTitle}>used</div>
-            <span className={classes.value}>903</span> <small>kW/h</small>
+            <span className={classes.value}>{formatedData.consumed}</span> <small>kW/h</small>
           </div>
         </section>
         <footer className={classes.footer}>
           <div className={classes.footerItem}>
             earned
             <div className={classes.amount}>
-              257 <small>€</small>
+              {formatedData.earned} <small>{formatedData.currency}</small>
             </div>
           </div>
           <div className={classes.footerItem}>
             spend
             <div className={classes.amount}>
-              4334 <small>€</small>
+              {formatedData.spent} <small>{formatedData.currency}</small>
             </div>
           </div>
         </footer>
@@ -50,18 +52,18 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     display: 'flex',
     flexDirection: 'column',
-    cursor: "pointer",
+    cursor: 'pointer',
+    width: '33.3332%',
+    justifyContent: 'space-between',
   },
   cardActive: {
-    borderColor: "#357CA2",
-    cursor: "default",
-    "& $day": {
-
+    borderColor: '#357CA2',
+    cursor: 'default',
+    '& $day': {},
+    '& footer': {
+      background: '#357CA2',
+      color: '#fff',
     },
-    "& footer": {
-      background: "#357CA2",
-      color: "#fff"
-    }
   },
   day: {
     fontSize: '20px',
