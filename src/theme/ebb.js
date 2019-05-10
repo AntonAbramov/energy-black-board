@@ -18,11 +18,6 @@ const secondaryBackgroundColor = transparentize(0.8, secondaryColor);
 
 const paletteType = 'light';
 
-const todoOwnColor = lighten(0.1, '#F7F3E3');
-const todoAssignedToMeColor = lighten(0.2, '#FABF12');
-const todoAssignedByMeColor = lighten(0.2, '#14555A');
-const outlookEventColor = lighten(0.2, '#e6884f');
-
 export const themeObject = {
 
   primary: primaryColor,
@@ -45,13 +40,6 @@ export const themeObject = {
     bold: 500,
     xBold: 600,
     xxBold: 800,
-  },
-
-  sidebar: {
-    defaultWidth: 250,
-    narrowWidth: 56,
-    backgroundColor: '',
-    color: '',
   },
 
   spacing: {
@@ -107,13 +95,6 @@ export const themeObject = {
     text: {
       main: defaultTextColor,
       secondary: 'rgba(0, 0, 0, 0.54)',
-    },
-    todos: {
-      ownItem: todoOwnColor,
-      assignedToMe: todoAssignedToMeColor,
-      assignedByMe: todoAssignedByMeColor,
-      outlookEvent: outlookEventColor,
-      other: '',
     },
     secondaryLight: '#26a69a',
     secondaryDark: '#00766c',
