@@ -8,7 +8,7 @@ import { fetchData } from '../common/utils';
 
 class DashboardPage extends Component {
   state = {
-    active: '',
+    active: 'day',
     cards: [],
     cardYear: [],
   };
@@ -85,6 +85,7 @@ const styles = theme => ({
     justifyContent: 'space-around',
     marginLeft: -theme.spacing.unit,
     marginRight: -theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
   title: {
     color: theme.primary,
