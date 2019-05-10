@@ -12,7 +12,6 @@ import { mockData } from './mockData';
 class EnergyDetailsPage extends Component {
   state = {
     value: '',
-    data: [],
     radioButtonValue: 'comparison',
   };
 
@@ -27,7 +26,7 @@ class EnergyDetailsPage extends Component {
 
   render() {
     const { classes, history } = this.props;
-    const { value, data, radioButtonValue } = this.state;
+    const { value, radioButtonValue } = this.state;
     return (
       <div className={classes}>
         <h1 className={classes.title}>energy statistics</h1>
@@ -80,8 +79,8 @@ class EnergyDetailsPage extends Component {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="generated" fill="#8884d8" />
-            <Bar dataKey="consumed" fill="#82ca9d" />
+            <Bar dataKey="generated" fill="#82ca9d" />
+            <Bar dataKey="consumed" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
 
@@ -139,9 +138,10 @@ const styles = theme => ({
   },
   'detail-list__generated': {
     display: 'block',
+    color: '#82ca9d',
   },
   'detail-list__consumed': {
-    color: '#828282',
+    color: '#8884d8',
     fontSize: '12px',
     display: 'block',
   },
