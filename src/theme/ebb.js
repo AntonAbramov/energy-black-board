@@ -19,7 +19,6 @@ const secondaryBackgroundColor = transparentize(0.8, secondaryColor);
 const paletteType = 'light';
 
 export const themeObject = {
-
   primary: primaryColor,
 
   radius: 2,
