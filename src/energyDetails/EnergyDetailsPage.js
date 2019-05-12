@@ -10,23 +10,29 @@ import moment from 'moment';
 import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
 
 const getComparisonData = data => {
-  return data.map(item => ({
-    dateTime: item.dateTime.split(' ')[1],
-    generated: item.generated,
-    consumed: item.consumed,
-  }));
+  return data
+    .filter((_, i) => i % 4 === 0)
+    .map(item => ({
+      dateTime: item.dateTime.split(' ')[1],
+      generated: item.generated,
+      consumed: item.consumed,
+    }));
 };
 const getConsumedData = data => {
-  return data.map(item => ({
-    consumed: item.consumed,
-    dateTime: item.dateTime.split(' ')[1],
-  }));
+  return data
+    .filter((_, i) => i % 4 === 0)
+    .map(item => ({
+      consumed: item.consumed,
+      dateTime: item.dateTime.split(' ')[1],
+    }));
 };
 const getGeneratedData = data => {
-  return data.map(item => ({
-    generated: item.generated,
-    dateTime: item.dateTime.split(' ')[1],
-  }));
+  return data
+    .filter((_, i) => i % 4 === 0)
+    .map(item => ({
+      generated: item.generated,
+      dateTime: item.dateTime.split(' ')[1],
+    }));
 };
 
 const getDiagramData = (data, mode) => {
@@ -55,48 +61,18 @@ class EnergyDetailsPage extends Component {
     } = this.props;
 
     const mmPathDateTime = moment(pathDateTime, 'DD.MM.YYYY', true);
-    console.log(mmPathDateTime.isValid());
+    // console.log(mmPathDateTime.isValid());
 
     if (mmPathDateTime.isValid()) {
       this.setState({
         previewData: mmPathDateTime.format('YYYY-MM-DD'),
         energyData: getDay(mmPathDateTime.format('DD.MM.YYYY')),
       });
-      console.log('is valid...');
+      // console.log('is valid...');
     } else {
       history.push(`/energy/${moment(this.state.previewData).format('DD.MM.YYYY')}`);
-      console.log('!!! is INvalid...');
+      // console.log('!!! is INvalid...');
     }
-
-    // const formattedPathDateTime = moment(pathDateTime).format('YYYY-DD-MM');
-
-    // if (moment(pathDateTime).isValid() && formattedPathDateTime && formattedPathDateTime !== 'Invalid date') {
-    //   this.setState({
-    //     previewData: formattedPathDateTime,
-    //     energyData: getDay(pathDateTime),
-    //   });
-    // } else {
-    //   this.setState({
-    //     energyData: getDay(this.state.previewData),
-    //   });
-    //   history.push(`/energy/${this.state.previewData}`);
-    // }
-
-    // if (pathDate) {
-    //   this.setState({
-    //     previewData: decodeURIComponent(pathDate),
-    //     energyData: getDay(pathDate),
-    //   });
-    // } else {
-    //   history.push(`/energy/${moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE)}`);
-    //   this.setState({
-    //     previewData: moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE),
-    //   });
-    // }
-    // console.log(pathDate);
-    // console.log(getDay('01.05.2019 04:15'));
-    // console.log(getHours(moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE)));
-    // console.log(moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE));
   }
 
   handleChangeDate = e => {
@@ -115,7 +91,7 @@ class EnergyDetailsPage extends Component {
 
   render() {
     const { classes, history } = this.props;
-    const { previewData, radioButtonValue } = this.state;
+    const { previewData, radioButtonValue, energyData } = this.state;
 
     return (
       <div className={classes['energy-details-page']}>
@@ -155,17 +131,15 @@ class EnergyDetailsPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={getDiagramData(this.state.energyData, this.state.radioButtonValue)}
+            data={getDiagramData(energyData, radioButtonValue)}
             margin={{
               top: 30,
-              // right: 30,
-              // left: 30,
               bottom: 30,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="dateTime" />
-            <YAxis />
+            <CartesianGrid strokeDasharray="8 3" />
+            <XAxis dataKey="dateTime" fontSize={12} fontFamily="Verdana" />
+            <YAxis fontSize={12} fontFamily="Verdana" />
             <Tooltip />
             <Legend />
             <Bar dataKey="generated" fill="#82ca9d" />
