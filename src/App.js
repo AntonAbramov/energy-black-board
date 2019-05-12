@@ -16,7 +16,6 @@ class App extends Component {
 }
 const styles = theme => ({
   root: {
-
     margin: '0',
     padding: 0,
     paddingLeft: theme.spacing.unit,

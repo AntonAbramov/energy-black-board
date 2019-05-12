@@ -1,97 +1,170 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
-import Spinner from '../common/spinner/spinner';
-import Title from '../common/typography/Title';
-import Card from '../components/Card/Card';
-import Chart from '../components/Chart';
-import { fetchData } from '../common/utils';
 
 class DashboardPage extends Component {
-  state = {
-    active: 'day',
-    cards: [],
-    cardYear: [],
-  };
-
-  componentDidMount() {
-    setTimeout(() => {
-      fetchData('/day.json')
-        .then(res => {
-          this.setState(state => {
-            state.cards.push({
-              period: 'day',
-              data: res,
-            });
-            return state;
-          });
-        })
-        .then(() => {
-          fetchData('/month.json').then(res => {
-            this.setState(state => {
-              state.cards.push({
-                period: 'month',
-                data: res,
-              });
-              return state;
-            });
-          });
-          fetchData('/year.json').then(res => {
-            this.setState(state => {
-              state.cards.push({
-                period: 'year',
-                data: res,
-              });
-              return state;
-            });
-          });
-        });
-    }, 300);
-  }
-
-  renderCard = () => {
-    return this.state.cards.map((item, idx) => (
-      <Card
-        key={idx}
-        period={item.period}
-        selected={this.state.active === item.period}
-        data={item.data}
-        onClick={this.cardClickHandler(item.period)}
-      />
-    ));
-  };
-
-  cardClickHandler = val => () => {
-    this.setState({ active: val });
-  };
+  state = {};
 
   render() {
     const { classes } = this.props;
     return (
-      <Fragment>
-        <Title className={classes.title}>Energy statistics</Title>
-        <section className={classes.container}>{this.state.cards.length ? this.renderCard() : <Spinner loading={true} size={40} /> }</section>
-        <Chart history={this.props.history} />
-      </Fragment>
+      <div className={classes.dashboard}>
+        <h1 className={classes['page-title']}>energy dashboard</h1>
+        <ul className={classes.dashboard__list}>
+          <li className={classes.dashboard__item}>
+            <div className={classes['dashboard-item__title']}>today</div>
+            <div className={classes.dashboard__date}>
+              <span className={classes['dashboard__main-date']}>14:55</span>
+              <span className={classes['dashboard__secondary-date']}>21.05.2019</span>
+            </div>
+            <div className={classes['dashboard__stat-wrap']}>
+              <div className={classes['dashboard__stat-left']}>
+                <div className={classes['dashboard__stat-title']}>generated</div>
+                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+              <div className={classes['dashboard__stat-right']}>
+                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+            </div>
+            <div className={classes['dashboard__stat-wrap']}>
+              <div className={classes['dashboard__stat-left']}>
+                <div className={classes['dashboard__stat-title']}>generated</div>
+                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+              <div className={classes['dashboard__stat-right']}>
+                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+            </div>
+          </li>
+          <li className={classes.dashboard__item}>
+            <div className={classes['dashboard-item__title']}>today</div>
+            <div className={classes.dashboard__date}>
+              <span className={classes['dashboard__main-date']}>14:55</span>
+              <span className={classes['dashboard__secondary-date']}>21.05.2019</span>
+            </div>
+            <div className={classes['dashboard__stat-wrap']}>
+              <div className={classes['dashboard__stat-left']}>
+                <div className={classes['dashboard__stat-title']}>generated</div>
+                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+              <div className={classes['dashboard__stat-right']}>
+                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+            </div>
+            <div className={classes['dashboard__stat-wrap']}>
+              <div className={classes['dashboard__stat-left']}>
+                <div className={classes['dashboard__stat-title']}>generated</div>
+                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+              <div className={classes['dashboard__stat-right']}>
+                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+            </div>
+          </li>
+          <li className={classes.dashboard__item}>
+            <div className={classes['dashboard-item__title']}>today</div>
+            <div className={classes.dashboard__date}>
+              <span className={classes['dashboard__main-date']}>14:55</span>
+              <span className={classes['dashboard__secondary-date']}>21.05.2019</span>
+            </div>
+            <div className={classes['dashboard__stat-wrap']}>
+              <div className={classes['dashboard__stat-left']}>
+                <div className={classes['dashboard__stat-title']}>generated</div>
+                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+              <div className={classes['dashboard__stat-right']}>
+                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+            </div>
+            <div className={classes['dashboard__stat-wrap']}>
+              <div className={classes['dashboard__stat-left']}>
+                <div className={classes['dashboard__stat-title']}>generated</div>
+                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+              <div className={classes['dashboard__stat-right']}>
+                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-units']}>kW/h</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     );
   }
 }
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    alignItems: 'stretch',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-around',
-    marginLeft: -theme.spacing.unit,
-    marginRight: -theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  title: {
+  'page-title': {
     color: theme.primary,
     marginBottom: 30,
+    fontSize: 32,
+    fontFamily: 'Verdana',
+    fontWeight: 'normal',
   },
-  item: {},
+  dashboard: {
+    'max-width': '900px',
+    padding: '0 20px',
+    margin: '0 auto',
+  },
+  dashboard__list: {
+    margin: 0,
+    padding: 0,
+    'list-style': 'none',
+    display: 'flex',
+  },
+  dashboard__item: {
+    flex: 1,
+    border: '1px solid #E6E8EB',
+    padding: '20px',
+  },
+  'dashboard-item__title': {
+    'font-size': '20px',
+    color: '#357CA2',
+    'margin-bottom': '10px',
+  },
+  dashboard__date: {
+    'margin-bottom': '10px',
+  },
+  'dashboard__main-date': {
+    color: '#000',
+    fontSize: '16px',
+  },
+  'dashboard__secondary-date': {
+    fontSize: '12px',
+    'margin-left': '6px',
+  },
+  'dashboard__stat-wrap': {
+    display: 'flex',
+  },
+  'dashboard__stat-left': { flex: 1 },
+  'dashboard__stat-right': { flex: 1 },
+  'dashboard__stat-title': {
+    fontSize: 12,
+    color: '#828282',
+    'margin-bottom': '2px',
+  },
+  'dashboard__stat-value': { fontWeight: 'bold' },
+  'dashboard__stat-units': {
+    fontSize: 12,
+    display: 'inline-block',
+    'margin-left': '5px',
+  },
 });
 
 export default withStyles(styles)(DashboardPage);
