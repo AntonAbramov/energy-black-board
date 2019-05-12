@@ -24,6 +24,10 @@ class DashboardPage extends Component {
     this.setState({ currentTime: moment(new Date()).format('HH:mm:ss') });
   };
 
+  goToDetails = () => {
+    this.props.history.push('/energy');
+  };
+
   render() {
     const { classes } = this.props;
     const { currentTime } = this.state;
@@ -128,7 +132,13 @@ class DashboardPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={getDay('01.05.2019 04:15').filter((_, i) => i % 4 === 0)}
+            data={getDay('01.05.2019 04:15')
+              .filter((_, i) => i % 4 === 0)
+              .map(item => ({
+                dateTime: item.dateTime.split(' ')[1],
+                generated: item.generated,
+                consumed: item.consumed,
+              }))}
             margin={{
               top: 30,
               bottom: 30,
@@ -143,7 +153,7 @@ class DashboardPage extends Component {
             <Bar dataKey="consumed" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
-        <Button color="primary" className={classes['go-fwd-btn']}>
+        <Button color="primary" className={classes['go-fwd-btn']} onClick={this.goToDetails}>
           energy dashboard &rarr;
         </Button>
       </div>

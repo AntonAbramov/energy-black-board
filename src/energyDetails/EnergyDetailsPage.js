@@ -61,17 +61,17 @@ class EnergyDetailsPage extends Component {
     } = this.props;
 
     const mmPathDateTime = moment(pathDateTime, 'DD.MM.YYYY', true);
-    // console.log(mmPathDateTime.isValid());
+    console.log(mmPathDateTime.isValid());
 
     if (mmPathDateTime.isValid()) {
       this.setState({
         previewData: mmPathDateTime.format('YYYY-MM-DD'),
         energyData: getDay(mmPathDateTime.format('DD.MM.YYYY')),
       });
-      // console.log('is valid...');
+      console.log('is valid...');
     } else {
       history.push(`/energy/${moment(this.state.previewData).format('DD.MM.YYYY')}`);
-      // console.log('!!! is INvalid...');
+      console.log('!!! is INvalid...');
     }
   }
 
