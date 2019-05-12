@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Hidden } from '@material-ui/core';
 
 class DashboardPage extends Component {
   state = {};
@@ -30,22 +30,22 @@ class DashboardPage extends Component {
             </div>
             <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
-                <div className={classes['dashboard__stat-title']}>generated</div>
+                <div className={classes['dashboard__stat-title']}>earned</div>
                 <span className={classes['dashboard__stat-value']}>123</span>
-                <span className={classes['dashboard__stat-units']}>kW/h</span>
+                <span className={classes['dashboard__stat-units']}>€</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
-                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <div className={classes['dashboard__stat-title']}>spend</div>
                 <span className={classes['dashboard__stat-value']}>256</span>
-                <span className={classes['dashboard__stat-units']}>kW/h</span>
+                <span className={classes['dashboard__stat-units']}>€</span>
               </div>
             </div>
           </li>
           <li className={classes.dashboard__item}>
-            <div className={classes['dashboard-item__title']}>today</div>
+            <div className={classes['dashboard-item__title']}>previous month</div>
             <div className={classes.dashboard__date}>
-              <span className={classes['dashboard__main-date']}>14:55</span>
-              <span className={classes['dashboard__secondary-date']}>21.05.2019</span>
+              <span className={classes['dashboard__main-date']}>april 2019</span>
+              {/* <span className={classes['dashboard__secondary-date']}>21.05.2019</span> */}
             </div>
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
@@ -61,22 +61,22 @@ class DashboardPage extends Component {
             </div>
             <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
-                <div className={classes['dashboard__stat-title']}>generated</div>
+                <div className={classes['dashboard__stat-title']}>earned</div>
                 <span className={classes['dashboard__stat-value']}>123</span>
-                <span className={classes['dashboard__stat-units']}>kW/h</span>
+                <span className={classes['dashboard__stat-units']}>€</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
-                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <div className={classes['dashboard__stat-title']}>spend</div>
                 <span className={classes['dashboard__stat-value']}>256</span>
-                <span className={classes['dashboard__stat-units']}>kW/h</span>
+                <span className={classes['dashboard__stat-units']}>€</span>
               </div>
             </div>
           </li>
           <li className={classes.dashboard__item}>
-            <div className={classes['dashboard-item__title']}>today</div>
+            <div className={classes['dashboard-item__title']}>previous year</div>
             <div className={classes.dashboard__date}>
-              <span className={classes['dashboard__main-date']}>14:55</span>
-              <span className={classes['dashboard__secondary-date']}>21.05.2019</span>
+              <span className={classes['dashboard__main-date']}>2018</span>
+              {/* <span className={classes['dashboard__secondary-date']}>21.05.2019</span> */}
             </div>
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
@@ -92,14 +92,14 @@ class DashboardPage extends Component {
             </div>
             <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
-                <div className={classes['dashboard__stat-title']}>generated</div>
+                <div className={classes['dashboard__stat-title']}>earned</div>
                 <span className={classes['dashboard__stat-value']}>123</span>
-                <span className={classes['dashboard__stat-units']}>kW/h</span>
+                <span className={classes['dashboard__stat-units']}>€</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
-                <div className={classes['dashboard__stat-title']}>consumed</div>
+                <div className={classes['dashboard__stat-title']}>spend</div>
                 <span className={classes['dashboard__stat-value']}>256</span>
-                <span className={classes['dashboard__stat-units']}>kW/h</span>
+                <span className={classes['dashboard__stat-units']}>€</span>
               </div>
             </div>
           </li>
@@ -131,7 +131,13 @@ const styles = theme => ({
   dashboard__item: {
     flex: 1,
     border: '1px solid #E6E8EB',
+    'border-radius': '3px',
+    overflow: 'hidden',
     cursor: 'pointer',
+    'margin-right': '20px',
+    '&:last-child': {
+      'margin-right': 0,
+    },
     '&:hover': {
       border: '1px solid #357CA2',
     },
@@ -170,6 +176,9 @@ const styles = theme => ({
   },
   'dashboard__stat-wrap--money': {
     background: '#F4F4F4',
+    '& $dashboard__stat-value': {
+      fontSize: '22px',
+    },
   },
   'dashboard__stat-left': { flex: 1 },
   'dashboard__stat-right': { flex: 1 },
@@ -178,7 +187,9 @@ const styles = theme => ({
     color: '#828282',
     'margin-bottom': '2px',
   },
-  'dashboard__stat-value': { fontWeight: 'bold' },
+  'dashboard__stat-value': {
+    fontSize: '18px',
+  },
   'dashboard__stat-units': {
     fontSize: 12,
     display: 'inline-block',
