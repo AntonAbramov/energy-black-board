@@ -72,8 +72,11 @@ class EnergyDetailsPage extends Component {
 
   handleChangeDate = e => {
     const { value } = e.target;
+    const { history } = this.props;
+    history.push(`/energy/${moment(value).format('DD.MM.YYYY')}`);
     this.setState({
       previewData: moment(value).format('YYYY-MM-DD'),
+      energyData: getDay(moment(value).format('DD.MM.YYYY')),
     });
   };
 
