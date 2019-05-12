@@ -25,12 +25,13 @@ class EnergyDetailsPage extends Component {
       },
     } = this.props;
 
-    const mmPathDateTime = moment(pathDateTime, 'DD MM YYYY');
+    const mmPathDateTime = moment(pathDateTime, 'DD.MM.YYYY', true);
     console.log(mmPathDateTime.isValid());
 
     if (mmPathDateTime.isValid()) {
       this.setState({
         previewData: mmPathDateTime.format('YYYY-MM-DD'),
+        energyData: getDay(mmPathDateTime.format('DD.MM.YYYY')),
       });
       console.log('is valid...');
     } else {
