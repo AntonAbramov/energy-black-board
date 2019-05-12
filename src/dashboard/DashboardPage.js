@@ -2,13 +2,31 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Button from '@material-ui/core/Button';
+import moment from 'moment';
 import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
 
 class DashboardPage extends Component {
-  state = {};
+  state = {
+    currentTime: moment(new Date()).format('HH:mm:ss'),
+    intervalId: null,
+  };
+
+  componentDidMount() {
+    const intervalId = setInterval(this.timer, 1000);
+    this.setState({ intervalId });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
+  timer = () => {
+    this.setState({ currentTime: moment(new Date()).format('HH:mm:ss') });
+  };
 
   render() {
     const { classes } = this.props;
+    const { currentTime } = this.state;
     return (
       <div className={classes.dashboard}>
         <h1 className={classes['page-title']}>energy dashboard</h1>
@@ -16,7 +34,7 @@ class DashboardPage extends Component {
           <li className={`${classes.dashboard__item} ${classes['dashboard__item--active']}`}>
             <div className={classes['dashboard-item__title']}>today</div>
             <div className={classes.dashboard__date}>
-              <span className={classes['dashboard__main-date']}>14:55</span>
+              <span className={classes['dashboard__main-date']}>{currentTime}</span>
               <span className={classes['dashboard__secondary-date']}>21.05.2019</span>
             </div>
             <div className={classes['dashboard__stat-wrap']}>
@@ -110,7 +128,7 @@ class DashboardPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={getDay('01.05.2019 04:15')}
+            data={getDay('01.05.2019 04:15').filter((_, i) => i % 4 === 0)}
             margin={{
               top: 30,
               bottom: 30,
