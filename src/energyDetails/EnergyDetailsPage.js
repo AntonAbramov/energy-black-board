@@ -7,8 +7,37 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import moment from 'moment';
-// import { mockData } from './mockData';
 import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
+
+const getComparisonData = data => {
+  return data.map(item => ({
+    dateTime: item.dateTime.split(' ')[1],
+    generated: item.generated,
+    consumed: item.consumed,
+  }));
+};
+const getConsumedData = data => {
+  return data.map(item => ({
+    consumed: item.consumed,
+    dateTime: item.dateTime.split(' ')[1],
+  }));
+};
+const getGeneratedData = data => {
+  return data.map(item => ({
+    generated: item.generated,
+    dateTime: item.dateTime.split(' ')[1],
+  }));
+};
+
+const getDiagramData = (data, mode) => {
+  if (mode === 'generated') {
+    return getGeneratedData(data);
+  }
+  if (mode === 'consumed') {
+    return getConsumedData(data);
+  }
+  return getComparisonData(data);
+};
 
 class EnergyDetailsPage extends Component {
   state = {
@@ -126,15 +155,7 @@ class EnergyDetailsPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={this.state.energyData
-              .map(item => ({
-                dateTime: item.dateTime.split(' ')[1],
-                generated: item.generated,
-                consumed: item.consumed,
-              }))
-              .filter((el, i) => i % 2 === 0)
-              .filter((el, i) => i % 2 === 0)
-              .filter((el, i) => i % 2 === 0)}
+            data={getDiagramData(this.state.energyData, this.state.radioButtonValue)}
             margin={{
               top: 30,
               // right: 30,
