@@ -10,7 +10,7 @@ class DashboardPage extends Component {
       <div className={classes.dashboard}>
         <h1 className={classes['page-title']}>energy dashboard</h1>
         <ul className={classes.dashboard__list}>
-          <li className={classes.dashboard__item}>
+          <li className={`${classes.dashboard__item} ${classes['dashboard__item--active']}`}>
             <div className={classes['dashboard-item__title']}>today</div>
             <div className={classes.dashboard__date}>
               <span className={classes['dashboard__main-date']}>14:55</span>
@@ -28,7 +28,7 @@ class DashboardPage extends Component {
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
             </div>
-            <div className={classes['dashboard__stat-wrap']}>
+            <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>generated</div>
                 <span className={classes['dashboard__stat-value']}>123</span>
@@ -59,7 +59,7 @@ class DashboardPage extends Component {
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
             </div>
-            <div className={classes['dashboard__stat-wrap']}>
+            <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>generated</div>
                 <span className={classes['dashboard__stat-value']}>123</span>
@@ -90,7 +90,7 @@ class DashboardPage extends Component {
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
             </div>
-            <div className={classes['dashboard__stat-wrap']}>
+            <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>generated</div>
                 <span className={classes['dashboard__stat-value']}>123</span>
@@ -131,15 +131,30 @@ const styles = theme => ({
   dashboard__item: {
     flex: 1,
     border: '1px solid #E6E8EB',
-    padding: '20px',
+    cursor: 'pointer',
+    '&:hover': {
+      border: '1px solid #357CA2',
+    },
+  },
+  'dashboard__item--active': {
+    border: '1px solid #357CA2',
+
+    '& $dashboard__stat-wrap--money': {
+      background: '#357CA2',
+      '& $dashboard__stat-title': {
+        color: 'white',
+      },
+      '& $dashboard__stat-value': { color: 'white' },
+      '& $dashboard__stat-units': { color: 'white' },
+    },
   },
   'dashboard-item__title': {
     'font-size': '20px',
     color: '#357CA2',
-    'margin-bottom': '10px',
+    padding: '15px',
   },
   dashboard__date: {
-    'margin-bottom': '10px',
+    padding: '0 15px',
   },
   'dashboard__main-date': {
     color: '#000',
@@ -151,6 +166,10 @@ const styles = theme => ({
   },
   'dashboard__stat-wrap': {
     display: 'flex',
+    padding: '15px',
+  },
+  'dashboard__stat-wrap--money': {
+    background: '#F4F4F4',
   },
   'dashboard__stat-left': { flex: 1 },
   'dashboard__stat-right': { flex: 1 },
