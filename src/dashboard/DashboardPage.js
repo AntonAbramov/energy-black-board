@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { withStyles, Hidden } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Button from '@material-ui/core/Button';
+import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
 
 class DashboardPage extends Component {
   state = {};
@@ -104,6 +107,27 @@ class DashboardPage extends Component {
             </div>
           </li>
         </ul>
+
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            data={getDay('01.05.2019 04:15')}
+            margin={{
+              top: 30,
+              bottom: 30,
+            }}
+          >
+            <CartesianGrid strokeDasharray="8 3" />
+            <XAxis dataKey="dateTime" fontSize={12} fontFamily="Verdana" />
+            <YAxis fontSize={12} fontFamily="Verdana" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="generated" fill="#82ca9d" />
+            <Bar dataKey="consumed" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+        <Button color="primary" className={classes['go-fwd-btn']}>
+          energy dashboard &rarr;
+        </Button>
       </div>
     );
   }
@@ -194,6 +218,12 @@ const styles = theme => ({
     fontSize: 12,
     display: 'inline-block',
     'margin-left': '5px',
+  },
+  'go-fwd-btn': {
+    display: 'block',
+    marginBottom: '40px',
+    border: '1px solid #357CA2',
+    'text-transform': 'none',
   },
 });
 
