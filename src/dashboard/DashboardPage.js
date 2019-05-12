@@ -17,11 +17,14 @@ class DashboardPage extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.intervalId);
+    const { intervalId } = this.state;
+    clearInterval(intervalId);
   }
 
   timer = () => {
-    this.setState({ currentTime: moment(new Date()).format('HH:mm:ss') });
+    this.setState({
+      currentTime: moment(new Date()).format('HH:mm:ss'),
+    });
   };
 
   goToDetails = () => {
@@ -70,7 +73,6 @@ class DashboardPage extends Component {
             <div className={classes['dashboard-item__title']}>previous month</div>
             <div className={classes.dashboard__date}>
               <span className={classes['dashboard__main-date']}>april 2019</span>
-              {/* <span className={classes['dashboard__secondary-date']}>21.05.2019</span> */}
             </div>
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
@@ -101,7 +103,6 @@ class DashboardPage extends Component {
             <div className={classes['dashboard-item__title']}>previous year</div>
             <div className={classes.dashboard__date}>
               <span className={classes['dashboard__main-date']}>2018</span>
-              {/* <span className={classes['dashboard__secondary-date']}>21.05.2019</span> */}
             </div>
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
