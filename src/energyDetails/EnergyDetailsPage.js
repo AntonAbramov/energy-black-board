@@ -6,16 +6,74 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { mockData } from './mockData';
+import moment from 'moment';
+// import { mockData } from './mockData';
+import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
 
 class EnergyDetailsPage extends Component {
   state = {
     radioButtonValue: 'comparison',
+    previewData: moment(new Date()).format('YYYY-MM-DD'),
+    energyData: [],
   };
+
+  componentDidMount() {
+    const {
+      history,
+      match: {
+        params: { dateTime: pathDateTime },
+      },
+    } = this.props;
+
+    const mmPathDateTime = moment(pathDateTime, 'DD MM YYYY');
+    console.log(mmPathDateTime.isValid());
+
+    if (mmPathDateTime.isValid()) {
+      this.setState({
+        previewData: mmPathDateTime.format('YYYY-MM-DD'),
+      });
+      console.log('is valid...');
+    } else {
+      history.push(`/energy/${moment(this.state.previewData).format('DD.MM.YYYY')}`);
+      console.log('!!! is INvalid...');
+    }
+
+    // const formattedPathDateTime = moment(pathDateTime).format('YYYY-DD-MM');
+
+    // if (moment(pathDateTime).isValid() && formattedPathDateTime && formattedPathDateTime !== 'Invalid date') {
+    //   this.setState({
+    //     previewData: formattedPathDateTime,
+    //     energyData: getDay(pathDateTime),
+    //   });
+    // } else {
+    //   this.setState({
+    //     energyData: getDay(this.state.previewData),
+    //   });
+    //   history.push(`/energy/${this.state.previewData}`);
+    // }
+
+    // if (pathDate) {
+    //   this.setState({
+    //     previewData: decodeURIComponent(pathDate),
+    //     energyData: getDay(pathDate),
+    //   });
+    // } else {
+    //   history.push(`/energy/${moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE)}`);
+    //   this.setState({
+    //     previewData: moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE),
+    //   });
+    // }
+    // console.log(pathDate);
+    // console.log(getDay('01.05.2019 04:15'));
+    // console.log(getHours(moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE)));
+    // console.log(moment(new Date(), DAY_TIME_TEMPLATE).format(DAY_TIME_TEMPLATE));
+  }
 
   handleChangeDate = e => {
     const { value } = e.target;
-    this.setState({ date: value });
+    this.setState({
+      previewData: moment(value).format('YYYY-MM-DD'),
+    });
   };
 
   handleChangePreview = e => {
@@ -24,11 +82,12 @@ class EnergyDetailsPage extends Component {
 
   render() {
     const { classes, history } = this.props;
-    const { date, radioButtonValue } = this.state;
+    const { previewData, radioButtonValue } = this.state;
+
     return (
       <div className={classes['energy-details-page']}>
         <h1 className={classes['page-title']}>energy details</h1>
-        <Button color="primary" onClick={history.goBack} className={classes['go-back-btn']}>
+        <Button color="primary" onClick={() => history.push('/dashboard')} className={classes['go-back-btn']}>
           &larr; energy dashboard
         </Button>
         <div className={classes.dateFields}>
@@ -36,8 +95,8 @@ class EnergyDetailsPage extends Component {
             id="date"
             label="date"
             type="date"
-            value={date}
-            defaultValue="2019-05-01"
+            value={previewData}
+            // defaultValue="2019-05-01"
             onChange={this.handleChangeDate}
             className={classes.textField}
             InputLabelProps={{
@@ -63,7 +122,7 @@ class EnergyDetailsPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={mockData
+            data={this.state.energyData
               .map(item => ({
                 dateTime: item.dateTime.split(' ')[1],
                 generated: item.generated,
@@ -95,10 +154,10 @@ class EnergyDetailsPage extends Component {
               <span className={classes['detail-list__head']}>timeline</span>
             </span>
             <span className={classes['detail-list__statistics']}>
-              <span className={classes['detail-list__head']}>generated/consumed</span>
+              <span className={classes['detail-list__head']}>generated/consumed kwt/H</span>
             </span>
           </li>
-          {mockData.map(item => {
+          {this.state.energyData.map(item => {
             return (
               <li className={classes['detail-list__item']} key={`${item.generated}-${item.consumed}`}>
                 <span className={classes['detail-list__time-period']}>{item.dateTime.split(' ')[1]}</span>

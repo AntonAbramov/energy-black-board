@@ -7,7 +7,7 @@ export const Routes = () => {
   return (
     <Switch>
       <Route path="/dashboard" component={DashboardPage} />
-      <Route path="/energy" component={EnergyDetailsPage} />
+      <Route path="/energy/:dateTime?/" component={EnergyDetailsPage} />
       <Redirect to="/dashboard" />
     </Switch>
   );
