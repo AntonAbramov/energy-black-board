@@ -71,6 +71,10 @@ class EnergyDetailsPage extends Component {
       console.log('is valid...');
     } else {
       history.push(`/energy/${moment(this.state.previewData).format('DD.MM.YYYY')}`);
+      this.setState({
+        previewData: this.state.previewData,
+        energyData: getDay(mmPathDateTime.format('DD.MM.YYYY')),
+      });
       console.log('!!! is INvalid...');
     }
   }
