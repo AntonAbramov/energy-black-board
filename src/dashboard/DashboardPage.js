@@ -55,19 +55,22 @@ class DashboardPage extends Component {
 
   timer = () => {
     const mmDate = moment(new Date());
+    const dateTime = moment(mmDate, DAY_TIME_TEMPLATE)
+      .format(DAY_TIME_TEMPLATE)
+      .split(' ')[1];
+
     this.setState({
       currentTime: mmDate.format('HH:mm:ss'),
     });
 
+    const isAlreadyAdded = this.state.todayData.find(el => el.dateTime === dateTime);
+
     const diffInMinutesSinceStartDay = moment(mmDate, DAY_TIME_TEMPLATE).diff(moment(mmDate, DAY_TIME_TEMPLATE).startOf('day'), 'minutes');
 
-    if (diffInMinutesSinceStartDay % 15 === 0) {
+    if (diffInMinutesSinceStartDay % 15 === 0 && !isAlreadyAdded) {
       console.log(diffInMinutesSinceStartDay);
       console.log('updated...');
 
-      const dateTime = moment(mmDate, DAY_TIME_TEMPLATE)
-        .format(DAY_TIME_TEMPLATE)
-        .split(' ')[1];
       console.log(dateTime);
       this.setState({
         todayData: this.state.todayData.concat({
