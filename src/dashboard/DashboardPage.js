@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
+import faker from 'faker';
 import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
 
 const getGenerated = arr => {
@@ -53,9 +54,30 @@ class DashboardPage extends Component {
   }
 
   timer = () => {
+    const mmDate = moment(new Date());
     this.setState({
-      currentTime: moment(new Date()).format('HH:mm:ss'),
+      currentTime: mmDate.format('HH:mm:ss'),
     });
+
+    const diffInMinutesSinceStartDay = moment(mmDate, DAY_TIME_TEMPLATE).diff(moment(mmDate, DAY_TIME_TEMPLATE).startOf('day'), 'minutes');
+
+    if (diffInMinutesSinceStartDay % 15 === 0) {
+      console.log(diffInMinutesSinceStartDay);
+      console.log('updated...');
+
+      const dateTime = moment(mmDate, DAY_TIME_TEMPLATE)
+        .format(DAY_TIME_TEMPLATE)
+        .split(' ')[1];
+      console.log(dateTime);
+      this.setState({
+        todayData: this.state.todayData.concat({
+          dateTime,
+          generated: faker.finance.amount(1, 100, 3),
+          consumed: faker.finance.amount(1, 400, 8),
+        }),
+      });
+      console.log(this.state.todayData);
+    }
   };
 
   goToDetails = () => {
