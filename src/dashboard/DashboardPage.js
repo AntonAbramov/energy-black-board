@@ -10,11 +10,20 @@ class DashboardPage extends Component {
     currentTime: moment(new Date()).format('HH:mm:ss'),
     intervalId: null,
     viewPeriod: 'today',
+    viewData: [],
   };
 
   componentDidMount() {
     const intervalId = setInterval(this.timer, 1000);
-    this.setState({ intervalId });
+    this.setState({
+      viewPeriod: 'today',
+      viewData: getHours(moment(new Date()).format(DAY_TIME_TEMPLATE)).map(item => ({
+        dateTime: item.dateTime.split(' ')[1],
+        generated: item.generated,
+        consumed: item.consumed,
+      })),
+      intervalId,
+    });
   }
 
   componentWillUnmount() {
@@ -33,8 +42,24 @@ class DashboardPage extends Component {
   };
 
   handleSelectPeriod = e => {
+    let viewData;
+
+    if (e === 'today') {
+      viewData = getHours(moment(new Date()).format(DAY_TIME_TEMPLATE)).map(item => ({
+        dateTime: item.dateTime.split(' ')[1],
+        generated: item.generated,
+        consumed: item.consumed,
+      }));
+    }
+    if (e === 'month') {
+      viewData = getMonth();
+    }
+    if (e === 'year') {
+      viewData = getYear();
+    }
     this.setState({
       viewPeriod: e,
+      viewData,
     });
   };
 
@@ -52,7 +77,7 @@ class DashboardPage extends Component {
             <div className={classes['dashboard-item__title']}>today</div>
             <div className={classes.dashboard__date}>
               <span className={classes['dashboard__main-date']}>{currentTime}</span>
-              <span className={classes['dashboard__secondary-date']}>21.05.2019</span>
+              <span className={classes['dashboard__secondary-date']}>{moment().format('DD.MM.YYYY')}</span>
             </div>
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
@@ -150,13 +175,16 @@ class DashboardPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={getDay('01.05.2019 04:15')
-              .filter((_, i) => i % 4 === 0)
-              .map(item => ({
-                dateTime: item.dateTime.split(' ')[1],
-                generated: item.generated,
-                consumed: item.consumed,
-              }))}
+            data={
+              this.state.viewData
+              //  ('01.05.2019 04:15')
+              // .filter((_, i) => i % 4 === 0)
+              // .map(item => ({
+              //   dateTime: item.dateTime.split(' ')[1],
+              //   generated: item.generated,
+              //   consumed: item.consumed,
+              // }))
+            }
             margin={{
               top: 30,
               bottom: 30,

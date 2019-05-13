@@ -43,19 +43,23 @@ const getHours = date => {
 };
 
 const getMonth = date => {
-  return {
-    dateTime: date,
-    generated: faker.finance.amount(1, 300, 3),
-    consumed: faker.finance.amount(1, 1000, 8),
-  };
+  return [
+    {
+      dateTime: date,
+      generated: faker.finance.amount(1, 300, 3),
+      consumed: faker.finance.amount(1, 1000, 8),
+    },
+  ];
 };
 
 const getYear = date => {
-  return {
-    dateTime: date,
-    generated: faker.finance.amount(1, 300, 3),
-    consumed: faker.finance.amount(1, 1000, 8),
-  };
+  return [
+    {
+      dateTime: date,
+      generated: faker.finance.amount(1, 300, 3),
+      consumed: faker.finance.amount(1, 1000, 8),
+    },
+  ];
 };
 
 export { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE };
