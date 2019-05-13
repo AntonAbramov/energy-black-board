@@ -67,7 +67,7 @@ class DashboardPage extends Component {
 
     const diffInMinutesSinceStartDay = moment(mmDate, DAY_TIME_TEMPLATE).diff(moment(mmDate, DAY_TIME_TEMPLATE).startOf('day'), 'minutes');
 
-    if (diffInMinutesSinceStartDay % 1 === 0 && !isAlreadyAdded) {
+    if (diffInMinutesSinceStartDay % 15 === 0 && !isAlreadyAdded) {
       console.log(diffInMinutesSinceStartDay);
       console.log('updated...');
 
