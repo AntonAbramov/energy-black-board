@@ -116,7 +116,7 @@ class EnergyDetailsPage extends Component {
               shrink: true,
             }}
           />
-          <Button color="primary" className={classes['add-new-date-btn']}>
+          <Button color="primary" className={classes['add-new-date-btn']} disabled>
             &#43; compare with another date
           </Button>
         </div>

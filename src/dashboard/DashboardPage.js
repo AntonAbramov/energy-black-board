@@ -28,7 +28,7 @@ class DashboardPage extends Component {
   };
 
   goToDetails = () => {
-    this.props.history.push('/energy');
+    this.props.history.push(`/energy/${moment(new Date()).format('DD.MM.YYYY')}`);
   };
 
   render() {
