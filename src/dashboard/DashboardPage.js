@@ -9,6 +9,7 @@ class DashboardPage extends Component {
   state = {
     currentTime: moment(new Date()).format('HH:mm:ss'),
     intervalId: null,
+    viewPeriod: 'today',
   };
 
   componentDidMount() {
@@ -31,6 +32,12 @@ class DashboardPage extends Component {
     this.props.history.push(`/energy/${moment(new Date()).format('DD.MM.YYYY')}`);
   };
 
+  handleSelectPeriod = e => {
+    this.setState({
+      viewPeriod: e,
+    });
+  };
+
   render() {
     const { classes } = this.props;
     const { currentTime } = this.state;
@@ -38,7 +45,10 @@ class DashboardPage extends Component {
       <div className={classes.dashboard}>
         <h1 className={classes['page-title']}>energy dashboard</h1>
         <ul className={classes.dashboard__list}>
-          <li className={`${classes.dashboard__item} ${classes['dashboard__item--active']}`}>
+          <li
+            className={`${classes.dashboard__item} ${this.state.viewPeriod === 'today' && classes['dashboard__item--active']}`}
+            onClick={() => this.handleSelectPeriod('today')}
+          >
             <div className={classes['dashboard-item__title']}>today</div>
             <div className={classes.dashboard__date}>
               <span className={classes['dashboard__main-date']}>{currentTime}</span>
@@ -69,7 +79,11 @@ class DashboardPage extends Component {
               </div>
             </div>
           </li>
-          <li className={classes.dashboard__item}>
+
+          <li
+            className={`${classes.dashboard__item} ${this.state.viewPeriod === 'month' && classes['dashboard__item--active']}`}
+            onClick={() => this.handleSelectPeriod('month')}
+          >
             <div className={classes['dashboard-item__title']}>previous month</div>
             <div className={classes.dashboard__date}>
               <span className={classes['dashboard__main-date']}>april 2019</span>
@@ -99,7 +113,10 @@ class DashboardPage extends Component {
               </div>
             </div>
           </li>
-          <li className={classes.dashboard__item}>
+          <li
+            className={`${classes.dashboard__item} ${this.state.viewPeriod === 'year' && classes['dashboard__item--active']}`}
+            onClick={() => this.handleSelectPeriod('year')}
+          >
             <div className={classes['dashboard-item__title']}>previous year</div>
             <div className={classes.dashboard__date}>
               <span className={classes['dashboard__main-date']}>2018</span>
