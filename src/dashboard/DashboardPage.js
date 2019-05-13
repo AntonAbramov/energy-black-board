@@ -208,7 +208,6 @@ class DashboardPage extends Component {
           <BarChart
             data={this.showChart(this.state.viewPeriod)}
             margin={{
-              top: 30,
               bottom: 30,
             }}
           >
@@ -243,7 +242,7 @@ const styles = theme => ({
     margin: '0 auto',
   },
   dashboard__list: {
-    margin: 0,
+    margin: '0 0 30px 0',
     padding: 0,
     'list-style': 'none',
     display: 'flex',
@@ -328,6 +327,7 @@ const styles = theme => ({
     marginBottom: '40px',
     border: '1px solid #357CA2',
     'text-transform': 'none',
+    overflow: 'hidden',
   },
 });
 
