@@ -5,6 +5,23 @@ import Button from '@material-ui/core/Button';
 import moment from 'moment';
 import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
 
+const getGenerated = arr => {
+  return arr.reduce((acc, el) => {
+    return (acc += parseInt(el.generated, 10));
+  }, 0);
+};
+const getConsumed = arr => {
+  return arr.reduce((acc, el) => {
+    return (acc += parseInt(el.consumed, 10));
+  }, 0);
+};
+const getEarned = data => {
+  return parseInt(getGenerated(data) * 0.28, 10);
+};
+const getSpent = data => {
+  return parseInt(getConsumed(data) * 0.28, 10);
+};
+
 class DashboardPage extends Component {
   state = {
     currentTime: moment(new Date()).format('HH:mm:ss'),
@@ -96,24 +113,24 @@ class DashboardPage extends Component {
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>generated</div>
-                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-value']}>{getGenerated(this.state.todayData)}</span>
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
                 <div className={classes['dashboard__stat-title']}>consumed</div>
-                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-value']}>{getConsumed(this.state.todayData)}</span>
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
             </div>
             <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>earned</div>
-                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-value']}>{getEarned(this.state.todayData)}</span>
                 <span className={classes['dashboard__stat-units']}>€</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
                 <div className={classes['dashboard__stat-title']}>spend</div>
-                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-value']}>{getSpent(this.state.todayData)}</span>
                 <span className={classes['dashboard__stat-units']}>€</span>
               </div>
             </div>
@@ -130,24 +147,24 @@ class DashboardPage extends Component {
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>generated</div>
-                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-value']}>{getGenerated(this.state.previousMonthData)}</span>
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
                 <div className={classes['dashboard__stat-title']}>consumed</div>
-                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-value']}>{getConsumed(this.state.previousMonthData)}</span>
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
             </div>
             <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>earned</div>
-                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-value']}>{getEarned(this.state.previousMonthData)}</span>
                 <span className={classes['dashboard__stat-units']}>€</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
                 <div className={classes['dashboard__stat-title']}>spend</div>
-                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-value']}>{getSpent(this.state.previousMonthData)}</span>
                 <span className={classes['dashboard__stat-units']}>€</span>
               </div>
             </div>
@@ -163,24 +180,24 @@ class DashboardPage extends Component {
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>generated</div>
-                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-value']}>{getGenerated(this.state.previousYearData)}</span>
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
                 <div className={classes['dashboard__stat-title']}>consumed</div>
-                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-value']}>{getConsumed(this.state.previousYearData)}</span>
                 <span className={classes['dashboard__stat-units']}>kW/h</span>
               </div>
             </div>
             <div className={`${classes['dashboard__stat-wrap']} ${classes['dashboard__stat-wrap--money']}`}>
               <div className={classes['dashboard__stat-left']}>
                 <div className={classes['dashboard__stat-title']}>earned</div>
-                <span className={classes['dashboard__stat-value']}>123</span>
+                <span className={classes['dashboard__stat-value']}>{getEarned(this.state.previousYearData)}</span>
                 <span className={classes['dashboard__stat-units']}>€</span>
               </div>
               <div className={classes['dashboard__stat-right']}>
                 <div className={classes['dashboard__stat-title']}>spend</div>
-                <span className={classes['dashboard__stat-value']}>256</span>
+                <span className={classes['dashboard__stat-value']}>{getSpent(this.state.previousYearData)}</span>
                 <span className={classes['dashboard__stat-units']}>€</span>
               </div>
             </div>
