@@ -9,19 +9,23 @@ class DashboardPage extends Component {
   state = {
     currentTime: moment(new Date()).format('HH:mm:ss'),
     intervalId: null,
-    viewPeriod: 'today',
-    viewData: [],
+    viewPeriod: null,
+    todayData: [],
+    previousMonthData: [],
+    previousYearData: [],
   };
 
   componentDidMount() {
     const intervalId = setInterval(this.timer, 1000);
     this.setState({
       viewPeriod: 'today',
-      viewData: getHours(moment(new Date()).format(DAY_TIME_TEMPLATE)).map(item => ({
+      todayData: getHours(moment(new Date()).format(DAY_TIME_TEMPLATE)).map(item => ({
         dateTime: item.dateTime.split(' ')[1],
         generated: item.generated,
         consumed: item.consumed,
       })),
+      previousMonthData: getMonth(),
+      previousYearData: getYear(),
       intervalId,
     });
   }
@@ -61,6 +65,16 @@ class DashboardPage extends Component {
       viewPeriod: e,
       viewData,
     });
+  };
+
+  showChart = period => {
+    if (period === 'year') {
+      return this.state.previousYearData;
+    }
+    if (period === 'month') {
+      return this.state.previousMonthData;
+    }
+    return this.state.todayData;
   };
 
   render() {
@@ -176,7 +190,10 @@ class DashboardPage extends Component {
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
             data={
-              this.state.viewData
+              this.showChart(this.state.viewPeriod)
+              // this.previousMonthData
+              // this.previousYearData
+              // this.state.viewData
               //  ('01.05.2019 04:15')
               // .filter((_, i) => i % 4 === 0)
               // .map(item => ({
