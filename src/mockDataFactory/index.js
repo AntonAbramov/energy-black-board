@@ -20,18 +20,24 @@ const getDay = date => {
 };
 
 const getHours = date => {
-  const startOfDay = moment(date, DAY_TIME_TEMPLATE).startOf('day');
+  const startOfDay = moment(date, DAY_TIME_TEMPLATE)
+    .startOf('day')
+    .format(DAY_TIME_TEMPLATE);
 
-  if (date === startOfDay.format(DAY_TIME_TEMPLATE)) {
+  if (date === startOfDay) {
     return date;
   }
 
-  const diffInMinutesSinceStartDay = moment(date, DAY_TIME_TEMPLATE).diff(startOfDay, 'minutes');
+  const diffInMinutesSinceStartDay = moment(date, DAY_TIME_TEMPLATE).diff(moment(date, DAY_TIME_TEMPLATE).startOf('day'), 'minutes');
 
   const intOfPeriods = Math.floor(diffInMinutesSinceStartDay / 15);
 
   const arr = [...Array(intOfPeriods).keys()].map((_, idx) => {
-    const dateTime = startOfDay.add(INTERVAL_IN_MINUTES * idx, 'minutes').format(DAY_TIME_TEMPLATE);
+    const dateTime = moment(date, DAY_TIME_TEMPLATE)
+      .startOf('day')
+      .add(INTERVAL_IN_MINUTES * idx, 'minutes')
+      .format(DAY_TIME_TEMPLATE);
+    console.log(dateTime);
     return {
       dateTime,
       generated: faker.finance.amount(1, 100, 3),
