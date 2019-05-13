@@ -52,7 +52,7 @@ class DashboardPage extends Component {
       }));
     }
     if (e === 'month') {
-      viewData = getMonth();
+      viewData = getMonth(moment(new Date()).format(DAY_TIME_TEMPLATE));
     }
     if (e === 'year') {
       viewData = getYear();

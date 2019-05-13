@@ -35,9 +35,9 @@ const getHours = date => {
   const arr = [...Array(intOfPeriods).keys()].map((_, idx) => {
     const dateTime = moment(date, DAY_TIME_TEMPLATE)
       .startOf('day')
-      .add(INTERVAL_IN_MINUTES * idx, 'minutes')
+      .add(INTERVAL_IN_MINUTES * (idx + 1), 'minutes')
       .format(DAY_TIME_TEMPLATE);
-    console.log(dateTime);
+
     return {
       dateTime,
       generated: faker.finance.amount(1, 100, 3),
@@ -49,13 +49,15 @@ const getHours = date => {
 };
 
 const getMonth = date => {
-  return [
-    {
-      dateTime: date,
-      generated: faker.finance.amount(1, 300, 3),
-      consumed: faker.finance.amount(1, 1000, 8),
-    },
-  ];
+  const daysInPreviousMonth = moment()
+    .subtract(1, 'months')
+    .daysInMonth();
+
+  return [...Array(daysInPreviousMonth).keys()].map((_, idx) => ({
+    dateTime: idx + 1,
+    generated: faker.finance.amount(1, 300, 3),
+    consumed: faker.finance.amount(1, 1000, 8),
+  }));
 };
 
 const getYear = date => {
