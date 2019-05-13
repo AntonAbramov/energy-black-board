@@ -191,8 +191,8 @@ class DashboardPage extends Component {
             }}
           >
             <CartesianGrid strokeDasharray="8 3" />
-            <XAxis dataKey="dateTime" fontSize={12} fontFamily="Verdana" />
-            <YAxis fontSize={12} fontFamily="Verdana" />
+            <XAxis dataKey="dateTime" fontSize={10} fontFamily="Verdana" />
+            <YAxis fontSize={10} fontFamily="Verdana" />
             <Tooltip />
             <Legend />
             <Bar dataKey="generated" fill="#82ca9d" />
@@ -200,7 +200,7 @@ class DashboardPage extends Component {
           </BarChart>
         </ResponsiveContainer>
         <Button color="primary" className={classes['go-fwd-btn']} onClick={this.goToDetails}>
-          energy dashboard &rarr;
+          energy details &rarr;
         </Button>
       </div>
     );
