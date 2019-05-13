@@ -55,16 +55,16 @@ const getMonth = () => {
 
   return [...Array(daysInPreviousMonth).keys()].map((_, idx) => ({
     dateTime: idx + 1,
-    generated: faker.finance.amount(1, 300, 3),
-    consumed: faker.finance.amount(1, 1000, 8),
+    generated: faker.finance.amount(1, 500, 3),
+    consumed: faker.finance.amount(1, 2000, 8),
   }));
 };
 
 const getYear = () => {
   return [...Array(12).keys()].map((_, idx) => ({
     dateTime: moment.months(idx),
-    generated: faker.finance.amount(1, 300, 3),
-    consumed: faker.finance.amount(1, 1000, 8),
+    generated: faker.finance.amount(1000, 3000, 3),
+    consumed: faker.finance.amount(1, 10000, 8),
   }));
 };
 
