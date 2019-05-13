@@ -193,6 +193,9 @@ const styles = theme => ({
     border: '1px solid #357CA2',
     'text-transform': 'none',
     margin: '10px 0 0 30px',
+    '&:disabled': {
+      border: '1px solid rgba(0, 0, 0, 0.26)',
+    },
   },
   'page-title': {
     color: theme.primary,
