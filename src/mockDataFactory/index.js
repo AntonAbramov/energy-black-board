@@ -48,7 +48,7 @@ const getHours = date => {
   return arr;
 };
 
-const getMonth = date => {
+const getMonth = () => {
   const daysInPreviousMonth = moment()
     .subtract(1, 'months')
     .daysInMonth();
@@ -60,14 +60,12 @@ const getMonth = date => {
   }));
 };
 
-const getYear = date => {
-  return [
-    {
-      dateTime: date,
-      generated: faker.finance.amount(1, 300, 3),
-      consumed: faker.finance.amount(1, 1000, 8),
-    },
-  ];
+const getYear = () => {
+  return [...Array(12).keys()].map((_, idx) => ({
+    dateTime: moment.months(idx),
+    generated: faker.finance.amount(1, 300, 3),
+    consumed: faker.finance.amount(1, 1000, 8),
+  }));
 };
 
 export { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE };
