@@ -107,8 +107,8 @@ class DashboardPage extends Component {
           >
             <div className={classes['dashboard-item__title']}>today</div>
             <div className={classes.dashboard__date}>
-              <span className={classes['dashboard__main-date']}>{currentTime}</span>
-              <span className={classes['dashboard__secondary-date']}>{moment().format('DD.MM.YYYY')}</span>
+              <span className={classes['dashboard__main-date']}>{moment().format('DD.MM.YYYY')}</span>
+              <span className={classes['dashboard__secondary-date']}>{currentTime}</span>
             </div>
             <div className={classes['dashboard__stat-wrap']}>
               <div className={classes['dashboard__stat-left']}>
