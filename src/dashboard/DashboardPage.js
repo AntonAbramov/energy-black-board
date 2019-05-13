@@ -206,19 +206,7 @@ class DashboardPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={
-              this.showChart(this.state.viewPeriod)
-              // this.previousMonthData
-              // this.previousYearData
-              // this.state.viewData
-              //  ('01.05.2019 04:15')
-              // .filter((_, i) => i % 4 === 0)
-              // .map(item => ({
-              //   dateTime: item.dateTime.split(' ')[1],
-              //   generated: item.generated,
-              //   consumed: item.consumed,
-              // }))
-            }
+            data={this.showChart(this.state.viewPeriod)}
             margin={{
               top: 30,
               bottom: 30,
@@ -259,6 +247,10 @@ const styles = theme => ({
     padding: 0,
     'list-style': 'none',
     display: 'flex',
+    '@media (max-width: 700px)': {
+      // background: 'red',
+      display: 'block',
+    },
   },
   dashboard__item: {
     flex: 1,
@@ -267,6 +259,10 @@ const styles = theme => ({
     overflow: 'hidden',
     cursor: 'pointer',
     'margin-right': '20px',
+    '@media (max-width: 700px)': {
+      'margin-right': 0,
+      'margin-bottom': '20px',
+    },
     '&:last-child': {
       'margin-right': 0,
     },
