@@ -6,16 +6,87 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { mockData } from './mockData';
+import moment from 'moment';
+import { getDay, getHours, getMonth, getYear, DAY_TIME_TEMPLATE } from '../mockDataFactory/index';
+
+const getComparisonData = data => {
+  return data
+    .filter((_, i) => i % 4 === 0)
+    .map(item => ({
+      dateTime: item.dateTime.split(' ')[1],
+      generated: item.generated,
+      consumed: item.consumed,
+    }));
+};
+const getConsumedData = data => {
+  return data
+    .filter((_, i) => i % 4 === 0)
+    .map(item => ({
+      consumed: item.consumed,
+      dateTime: item.dateTime.split(' ')[1],
+    }));
+};
+const getGeneratedData = data => {
+  return data
+    .filter((_, i) => i % 4 === 0)
+    .map(item => ({
+      generated: item.generated,
+      dateTime: item.dateTime.split(' ')[1],
+    }));
+};
+
+const getDiagramData = (data, mode) => {
+  if (mode === 'generated') {
+    return getGeneratedData(data);
+  }
+  if (mode === 'consumed') {
+    return getConsumedData(data);
+  }
+  return getComparisonData(data);
+};
 
 class EnergyDetailsPage extends Component {
   state = {
     radioButtonValue: 'comparison',
+    previewData: moment(new Date()).format('YYYY-MM-DD'),
+    energyData: [],
   };
+
+  componentDidMount() {
+    const {
+      history,
+      match: {
+        params: { dateTime: pathDateTime },
+      },
+    } = this.props;
+
+    const mmPathDateTime = moment(pathDateTime, 'DD.MM.YYYY', true);
+    console.log(mmPathDateTime.isValid());
+
+    if (mmPathDateTime.isValid()) {
+      this.setState({
+        previewData: mmPathDateTime.format('YYYY-MM-DD'),
+        energyData: getDay(mmPathDateTime.format('DD.MM.YYYY')),
+      });
+      console.log('is valid...');
+    } else {
+      history.push(`/energy/${moment(this.state.previewData).format('DD.MM.YYYY')}`);
+      this.setState({
+        previewData: this.state.previewData,
+        energyData: getDay(mmPathDateTime.format('DD.MM.YYYY')),
+      });
+      console.log('!!! is INvalid...');
+    }
+  }
 
   handleChangeDate = e => {
     const { value } = e.target;
-    this.setState({ date: value });
+    const { history } = this.props;
+    history.push(`/energy/${moment(value).format('DD.MM.YYYY')}`);
+    this.setState({
+      previewData: moment(value).format('YYYY-MM-DD'),
+      energyData: getDay(moment(value).format('DD.MM.YYYY')),
+    });
   };
 
   handleChangePreview = e => {
@@ -24,11 +95,12 @@ class EnergyDetailsPage extends Component {
 
   render() {
     const { classes, history } = this.props;
-    const { date, radioButtonValue } = this.state;
+    const { previewData, radioButtonValue, energyData } = this.state;
+
     return (
       <div className={classes['energy-details-page']}>
         <h1 className={classes['page-title']}>energy details</h1>
-        <Button color="primary" onClick={history.goBack} className={classes['go-back-btn']}>
+        <Button color="primary" onClick={() => history.push('/dashboard')} className={classes['go-back-btn']}>
           &larr; energy dashboard
         </Button>
         <div className={classes.dateFields}>
@@ -36,15 +108,15 @@ class EnergyDetailsPage extends Component {
             id="date"
             label="date"
             type="date"
-            value={date}
-            defaultValue="2019-05-01"
+            value={previewData}
+            // defaultValue="2019-05-01"
             onChange={this.handleChangeDate}
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
             }}
           />
-          <Button color="primary" className={classes['add-new-date-btn']}>
+          <Button color="primary" className={classes['add-new-date-btn']} disabled>
             &#43; compare with another date
           </Button>
         </div>
@@ -63,25 +135,15 @@ class EnergyDetailsPage extends Component {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={mockData
-              .map(item => ({
-                dateTime: item.dateTime.split(' ')[1],
-                generated: item.generated,
-                consumed: item.consumed,
-              }))
-              .filter((el, i) => i % 2 === 0)
-              .filter((el, i) => i % 2 === 0)
-              .filter((el, i) => i % 2 === 0)}
+            data={getDiagramData(energyData, radioButtonValue)}
             margin={{
               top: 30,
-              // right: 30,
-              // left: 30,
               bottom: 30,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="dateTime" />
-            <YAxis />
+            <CartesianGrid strokeDasharray="8 3" />
+            <XAxis dataKey="dateTime" fontSize={12} fontFamily="Verdana" />
+            <YAxis fontSize={12} fontFamily="Verdana" />
             <Tooltip />
             <Legend />
             <Bar dataKey="generated" fill="#82ca9d" />
@@ -95,10 +157,10 @@ class EnergyDetailsPage extends Component {
               <span className={classes['detail-list__head']}>timeline</span>
             </span>
             <span className={classes['detail-list__statistics']}>
-              <span className={classes['detail-list__head']}>generated/consumed</span>
+              <span className={classes['detail-list__head']}>generated/consumed kwt/H</span>
             </span>
           </li>
-          {mockData.map(item => {
+          {this.state.energyData.map(item => {
             return (
               <li className={classes['detail-list__item']} key={`${item.generated}-${item.consumed}`}>
                 <span className={classes['detail-list__time-period']}>{item.dateTime.split(' ')[1]}</span>
@@ -131,6 +193,9 @@ const styles = theme => ({
     border: '1px solid #357CA2',
     'text-transform': 'none',
     margin: '10px 0 0 30px',
+    '&:disabled': {
+      border: '1px solid rgba(0, 0, 0, 0.26)',
+    },
   },
   'page-title': {
     color: theme.primary,

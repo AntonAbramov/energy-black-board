@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import Routes from './routes';
 import { withStyles } from '@material-ui/core';
+import Routes from './routes';
+import Header from './components/Header/header';
 
 class App extends Component {
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
+        <Header />
         <Routes />
       </div>
     );
@@ -14,10 +16,10 @@ class App extends Component {
 }
 const styles = theme => ({
   root: {
-    maxWidth: 900,
-    margin: "0 auto",
-    paddingLeft: theme.spacing.unit*2,
-    paddingRight: theme.spacing.unit*2,
+    margin: '0',
+    padding: 0,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
   },
 });
 
