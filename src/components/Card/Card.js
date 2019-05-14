@@ -1,27 +1,50 @@
 import React, { Component } from 'react';
 import cns from 'classnames';
 import { withStyles } from '@material-ui/core';
-import { parseData } from './utils';
+import { parseData, getDateInfo } from './utils';
+import moment from 'moment';
 
 class Card extends Component {
+  state = {
+    currentTime: null,
+  };
+
+  componentDidMount() {
+    this.setState({
+      currentTime: moment().format('h:mm:ss')
+    });
+    setInterval(() => {
+      if (moment().format('h:mm:ss') > moment().format(this.state.currentTime)) {
+        this.setState({
+          currentTime: moment().format('h:mm:ss'),
+        });
+      }
+    }, 50);
+  }
+
   render() {
-    const { classes, selected, onClick, data, period } = this.props;
-    const formatedData = parseData(data);
+    const { classes, selected, onClick, info } = this.props;
+    const formatedData = parseData(info.data);
     return (
       <div onClick={onClick} className={cns(classes.card, { [classes.cardActive]: selected })}>
-        <div className={classes.day}>today</div>
+        <div className={classes.day}>{getDateInfo(info.period).name}</div>
         <div className={classes.date}>
-          14:55 <small>9 may 2019</small>
+          {info.period === 'day' ? this.state.currentTime : null}
+          <small> {getDateInfo(info.period).date}</small>
         </div>
 
         <section className={classes.bottom}>
           <div className={classes.produced}>
             <div className={classes.bottomTitle}>produced</div>
-            <span className={classes.value}>{formatedData.generated}</span> <small>kW/h</small>
+            <span className={classes.value}>
+              {formatedData.generated} <small>kW/h</small>
+            </span>
           </div>
           <div className={classes.used}>
             <div className={classes.bottomTitle}>used</div>
-            <span className={classes.value}>{formatedData.consumed}</span> <small>kW/h</small>
+            <span className={classes.value}>
+              {formatedData.consumed} <small>kW/h</small>
+            </span>
           </div>
         </section>
         <footer className={classes.footer}>
@@ -92,7 +115,8 @@ const styles = theme => ({
     flexGrow: 1,
   },
   value: {
-    fontSize: '18px',
+    fontSize: '15px',
+    whiteSpace: 'nowrap',
   },
   footer: {
     background: '#F4F4F4',
@@ -106,7 +130,7 @@ const styles = theme => ({
   },
 
   amount: {
-    fontSize: '26px',
+    fontSize: '20px',
   },
 });
 
