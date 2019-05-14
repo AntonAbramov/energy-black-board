@@ -52,9 +52,8 @@ class DashboardPage extends Component {
     return this.state.cards.map((item, idx) => (
       <Card
         key={idx}
-        period={item.period}
         selected={this.state.active === item.period}
-        data={item.data}
+        info={item}
         onClick={this.cardClickHandler(item.period)}
       />
     ));
@@ -85,7 +84,7 @@ const styles = theme => ({
     justifyContent: 'space-around',
     marginLeft: -theme.spacing.unit,
     marginRight: -theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing.unit*4,
   },
   title: {
     color: theme.primary,

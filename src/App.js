@@ -14,10 +14,10 @@ class App extends Component {
 }
 const styles = theme => ({
   root: {
-    maxWidth: 1280,
+    maxWidth: 900,
     margin: "0 auto",
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit*2,
+    paddingRight: theme.spacing.unit*2,
   },
 });
 
