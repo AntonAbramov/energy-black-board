@@ -19,7 +19,7 @@ const Header = ({ classes }) => {
           </IconButton>
 
           <Link to="/dashboard" className={classes.header__logo}>
-            Tenant consumption
+            building energy balance
           </Link>
         </div>
         <ul className={classes['header__nav-list']}>

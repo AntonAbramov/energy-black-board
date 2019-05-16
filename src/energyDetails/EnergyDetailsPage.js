@@ -157,7 +157,7 @@ class EnergyDetailsPage extends Component {
               <span className={classes['detail-list__head']}>timeline</span>
             </span>
             <span className={classes['detail-list__statistics']}>
-              <span className={classes['detail-list__head']}>generated/consumed kwt/H</span>
+              <span className={classes['detail-list__head']}>generated/consumed kW/h</span>
             </span>
           </li>
           {this.state.energyData.map(item => {
